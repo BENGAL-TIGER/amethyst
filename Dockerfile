@@ -24,12 +24,11 @@ RUN apt-get -y update && apt-get -y install cmake git g++ p7zip libpython-dev tr
 # && make -f makefile-linux install -j40
 
 # Install fmtlib/fmt
-RUN cd $EXTMED_TEMP_DIR \
- && git clone https://github.com/fmtlib/fmt.git \
- && cd fmt \
- && cmake CMakeLists.txt \
- && make \
- && make install
+# RUN git clone https://github.com/fmtlib/fmt.git "$EXTMED_TEMP_DIR/fmt" \
+#  && cd "$EXTMED_TEMP_DIR/fmt" \
+#  && cmake CMakeLists.txt \
+#  && make \
+#  && make install
 
 
 
