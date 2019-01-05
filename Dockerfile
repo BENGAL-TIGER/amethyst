@@ -23,12 +23,18 @@ RUN apt-get -y update && apt-get -y install cmake git g++ p7zip libpython-dev tr
 # && make -f makefile-linux -j40 \
 # && make -f makefile-linux install -j40
 
-
+# Install fmtlib/fmt
+RUN cd $EXTMED_TEMP_DIR \
+ && git clone https://github.com/fmtlib/fmt.git \
+ && cd fmt \
+ && cmake CMakeLists.txt \
+ && make \
+ && make install
 
 
 
 # ADD ExternalMedia-coolprop-slamer59-repo $EXTMED_TEMP_DIR/ExternalMedia
-RUN 
+RUN echo "⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮ build external media ⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮⋮"
 
 RUN git clone --recursive https://github.com/BENGAL-TIGER/ExternalMedia "$EXTMED_TEMP_DIR/ExternalMedia"
 
@@ -42,12 +48,7 @@ RUN cd "$EXTMED_TEMP_DIR/ExternalMedia/Projects" \
 
 # ADD BuildLib-CMake.slamer.sh $EXTMED_TEMP_DIR/ExternalMedia/Projects/BuildLib-CMake.slamer.sh
 
-# RUN cd $EXTMED_TEMP_DIR \
-#  && git clone https://github.com/fmtlib/fmt.git \
-#  && cd fmt \
-#  && cmake CMakeLists.txt \
-#  && make \
-#  && make install
+
 #
 # #
 # RUN cd $EXTMED_TEMP_DIR/ExternalMedia/Projects \
