@@ -1,6 +1,6 @@
 # ============================================================================
 # Name        : Makefile
-# Author      : Jorrit Wronski (jowr@mek.dtu.dk)
+# Author      : Jorrit Wronski (jowr@mek.dtu.dk) 
 # Version     : 1.0
 # Copyright   : Use and modify at your own risk.
 # Description : Makefile for ExternalMedia and CoolProp
@@ -9,10 +9,10 @@
 # 1) make header library
 # 2) make install
 # ============================================================================
-#
+# 
 ###########################################################
-#  Setting the directories for library, header and
-#  binary files created in this makefile, change these
+#  Setting the directories for library, header and 
+#  binary files created in this makefile, change these 
 #  variables to install the library for Dymola or OpenModelica
 ###########################################################
 SRCDIR     :=./Sources
@@ -38,15 +38,15 @@ BINDIR     :=./build/LinuxGCC
 # ============================================================================
 # general commands:
 RM    := rm -f
-CP    := cp
-CD    := cd
-CH    := chmod 0644
-MK    := mkdir -p
-LD    := ldconfig
-LN    := ln -sf
-LT    := libtool
-AR    := ar rvs
-SVN   := svn
+CP    := cp 
+CD    := cd 
+CH    := chmod 0644 
+MK    := mkdir -p 
+LD    := ldconfig 
+LN    := ln -sf 
+LT    := libtool 
+AR    := ar rvs 
+SVN   := svn 
 
 # Emulate Gnu make utilities
 lc    = $(subst A,a,$(subst B,b,$(subst C,c,$(subst D,d,$(subst E,e,$(subst F,f,$(subst G,g,$(subst H,h,$(subst I,i,$(subst J,j,$(subst K,k,$(subst L,l,$(subst M,m,$(subst N,n,$(subst O,o,$(subst P,p,$(subst Q,q,$(subst R,r,$(subst S,s,$(subst T,t,$(subst U,u,$(subst V,v,$(subst W,w,$(subst X,x,$(subst Y,y,$(subst Z,z,$1))))))))))))))))))))))))))
@@ -64,12 +64,12 @@ THETEST          :=ExternalMediaLibTest
 COOLPROPDIR      :=../externals/coolprop/trunk/CoolProp
 
 LIBS       =
-OPTFLAGS   =-O2 -funroll-loops -ffast-math -DCOOLPROP=1 #-loleaut32 #-DCOOLPROP=1 # optimisation, remove for debugging
+OPTFLAGS   =-O2 -funroll-loops -ffast-math #-loleaut32 #-DCOOLPROP=1 # optimisation, remove for debugging
 
 
 ###########################################################
-#  Change these lines if you are using a different C++
-#  compiler or if you would like to use other flags.
+#  Change these lines if you are using a different C++ 
+#  compiler or if you would like to use other flags. 
 ###########################################################
 CPPC         =g++
 DEBUGFLAGS   =-g -O3
@@ -84,7 +84,7 @@ HEADERFILE      :=$(call lc,$(THENAME))
 HEADEREXTENSION :=.h
 ###########################################################
 #  Change these lines if you have other needs regarding
-#  the generated shared library file.
+#  the generated shared library file.  
 ###########################################################
 ifeq ($(LIBRARYEXTENSION),.so)
   install         : install_dynamic
@@ -94,7 +94,7 @@ endif
 
 ###########################################################
 #  Change these lines if you have other needs regarding
-#  the generated static library file.
+#  the generated static library file.  
 ###########################################################
 ifeq ($(LIBRARYEXTENSION),.a)
   install         : install_static
@@ -117,22 +117,22 @@ ifeq ($(USERNAME),root)
 endif
 	$(LN) $(LIBINST)/$(LIBRARY).so.$(MAJORVERSION) $(LIBINST)/$(LIBRARY).so
 ifeq ($(USERNAME),root)
-	$(LD)
-endif
+	$(LD) 
+endif 
 
 .PHONY     : install_static
 install_static : header library
 	$(MK) $(HEADINST) $(LIBINST)
 	$(CP) $(BINDIR)/$(HEADERFILE)$(HEADEREXTENSION) $(HEADINST)/$(HEADERFILE)$(HEADEREXTENSION)
-	$(CP) $(BINDIR)/$(LIBRARY).a  $(LIBINST)/$(LIBRARY).a
+	$(CP) $(BINDIR)/$(LIBRARY).a  $(LIBINST)/$(LIBRARY).a 
 	$(CH) $(HEADINST)/$(HEADERFILE)$(HEADEREXTENSION)
-	$(CH) $(LIBINST)/$(LIBRARY).a
+	$(CH) $(LIBINST)/$(LIBRARY).a 
 ifeq ($(USERNAME),root)
-	$(LD)
-endif
+	$(LD) 
+endif 
 
 .PHONY     : uninstall
-uninstall  :
+uninstall  : 
 	$(RM) $(HEADINST)/$(HEADERFILE)$(HEADEREXTENSION)
 	$(RM) $(LIBINST)/$(LIBRARY)$(LIBRARYEXTENSION)
 
@@ -145,7 +145,7 @@ all        : header library
 ############################################################
 EXMECPP_FILES  := $(wildcard $(SRCDIR)/*.cpp)
 EXMEOBJ_FILES  := $(addprefix $(BINDIR)/,$(notdir $(EXMECPP_FILES:.cpp=.o)))
-# Files do not change here, := assignments work.
+# Files do not change here, := assignments work. 
 USE_FLUIDPROP  := $(shell grep FLUIDPROP $(SRCDIR)/include.h | head -n 1 | cut -d " " -f3)
 USE_FLUIDPROP  := 0
 USE_COOLPROP   := $(shell grep COOLPROP $(SRCDIR)/include.h | head -n 1 | cut -d " " -f3)
@@ -164,12 +164,12 @@ ifeq ($(USE_COOLPROP),1)
 COOLCPP_FILES  := $(wildcard $(COOLPROPDIR)/*.cpp)
 COOLOBJ_FILES  := $(addprefix $(BINDIR)/,$(notdir $(COOLCPP_FILES:.cpp=.o)))
 else
-COOLCPP_FILES  :=
-COOLOBJ_FILES  :=
+COOLCPP_FILES  :=  
+COOLOBJ_FILES  :=  
 EXMEOBJ_FILES  := $(filter-out $(BINDIR)/coolpropsolver.o, $(EXMEOBJ_FILES))
 endif
 
-# Define search path for prerequisite files and g++ include
+# Define search path for prerequisite files and g++ include 
 # parameters to be used later.
 INC_LIST:=# 0
 INC_LIST+=$(COOLPROPDIR) #                  1
@@ -184,7 +184,7 @@ vpath %.cpp $(VPAINCLUDES)
 
 
 ##########################################################
-#  Compile the C++ sources into a library file that can
+#  Compile the C++ sources into a library file that can 
 #  be used as shared or static object.
 ###########################################################
 .PHONY     : header
@@ -228,8 +228,8 @@ $(BINDIR)/%.o : %.cpp
 #doc        : doc/Doxyfile
 #	doxygen doc/Doxyfile
 #	cd doc/latex ; \
-#	make all
-
+#	make all 
+	
 .PHONY : print-flags
 print-flags:
 	@printf "\nBuild settings:\n\
